@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 
 import ItemList from '../item-list/item-list';
-import PersonDetails from '../person-details/person-details';
+import ItemDetails from '../item-details/item-details';
 import ErrorIndicator from '../error-indicator/error-indicator';
 
 import './people-page.css';
 import SwapiService from "../../services/swapi-service";
+import Row from '../Row/Row';
 
-export default class PeoplePage extends Component {
-
-  swapiService = new SwapiService();
+class ErrorBoundry extends Component{
 
   state = {
-    selectedPerson: 3,
     hasError: false
   };
 
@@ -23,27 +21,49 @@ export default class PeoplePage extends Component {
     });
   }
 
+  render() {
+    
+    if (this.state.hasError) {
+      return <ErrorIndicator />;
+    }
+
+    return this.props.children;
+  }
+}
+export default class PeoplePage extends Component {
+
+  swapiService = new SwapiService();
+
+  state = {
+    selectedPerson: 3,
+  };
+
   onPersonSelected = (selectedPerson) => {
     this.setState({ selectedPerson });
   };
 
   render() {
 
-    if (this.state.hasError) {
-      return <ErrorIndicator />;
-    }
+    const itemList = (
+      <ItemList
+        onItemSelected={this.onPersonSelected}
+        getData={this.swapiService.getAllPeople}
+        // renderItem={(item) => `${item.name} (gender: ${item.gender})`}
+      >
+        {(item) => `${item.name} (gender: ${item.gender})`}
+      </ItemList>
+    );
+
+    const itemDetails = (
+      <ErrorBoundry>
+        <ItemDetails itemId={this.state.selectedPerson} />
+      </ErrorBoundry>
+    );
 
     return (
-      <div className="row mb2">
-        <div className="col-md-6">
-          <ItemList
-            onItemSelected={this.onPersonSelected}
-            getData={this.swapiService.getAllPeople}/>
-        </div>
-        <div className="col-md-6">
-          <PersonDetails personId={this.state.selectedPerson} />
-        </div>
-      </div>
+      // <ErrorBoundry>
+        <Row left={itemList} right={itemDetails} />
+      // </ErrorBoundry>
     );
   }
 }
