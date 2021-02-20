@@ -76,7 +76,7 @@ export default class App extends Component {
 
         <Row left={personDetails} right={starShipDetails} />
 
-        {/* <PeoplePage /> */}
+        <PeoplePage />
 
         {/* <div className="row mb2">
           <div className="col-md-6">
