@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import ItemList from '../item-list/item-list';
-import ItemDetails from '../item-details/item-details';
+import ItemDetails, { Record } from '../item-details/item-details';
 
 import './people-page.css';
 import SwapiService from "../../services/swapi-service";
@@ -58,7 +58,13 @@ export default class PeoplePage extends Component {
 
     const itemDetails = (
       <ErrorBoundry>
-        <ItemDetails itemId={this.state.selectedPerson} getImageUrl={getPersonImage} getData={getPerson} />
+        <ItemDetails itemId={this.state.selectedPerson} getImageUrl={getPersonImage} getData={getPerson} >
+
+          <Record field='gender' label='Gender' />
+          <Record field='birthYear' label='Birth Year' />
+          <Record field='eyeColor' label='Eye color' />
+
+        </ItemDetails>
       </ErrorBoundry>
     );
 

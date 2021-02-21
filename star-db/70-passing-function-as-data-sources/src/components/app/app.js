@@ -8,7 +8,7 @@ import PeoplePage from '../people-page';
 
 import './app.css';
 import ItemList from "../item-list/item-list";
-import PersonDetails from "../item-details/item-details";
+import { Record } from "../item-details/item-details";
 import SwapiService from "../../services/swapi-service";
 import ItemDetails from '../item-details/item-details';
 import Row from '../Row/Row';
@@ -49,14 +49,26 @@ export default class App extends Component {
         itemId={11}
         getData={getPerson}
         getImageUrl={getPersonImage}
-      />
+      >
+
+        <Record field={"gender"} label="Gender" />
+        <Record field={"birthYear"} label="Birth Year" />
+        <Record field={"eyeColor"} label="Eye Color" />
+        
+      </ItemDetails>
     ) 
     const starShipDetails = (
       <ItemDetails
         itemId={5}
         getData={getPlanet}
         getImageUrl={getPlanetImage}
-      />
+      >
+
+        <Record field="diameter" label="Diameter" />
+        <Record field="rotationPeriod" label="Rotation Period" />
+        <Record field="climate" label="climate" />
+
+      </ItemDetails>
     ) 
 
     return (
